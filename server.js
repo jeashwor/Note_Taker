@@ -1,7 +1,7 @@
-var express = require("express");
+const express = require("express");
 
-var app = express();
-var PORT = process.env.PORT || 4045;
+const app = express();
+const PORT = process.env.PORT || 4045;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
