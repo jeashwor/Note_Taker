@@ -3,7 +3,7 @@
 
 ## Description
 
-An Express.js based application that allows a user to add, view, and delete notes via an html interface.  Data is saved on express server as a JSON file. Application has been deployed using Heroku. 
+An Javascript based application that allows a user to add, view, and delete notes via an html interface.  Data storage as a JSON file and html routing is handled with an express.js based server. Application has been deployed using Heroku. 
 
 ![Main Page](./assets/mainPage.png)
 ![Notes Page](./assets/notePagewNote.png)
