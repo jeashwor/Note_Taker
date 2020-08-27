@@ -1,6 +1,9 @@
 const db = require("../db/db.json");
 const addID = require("../db/dataHandler");
 const fs = require("fs");
+const util = require("util");
+
+const addIDAsync = util.promisify(addID);
 
 const updateDB = (db) => {
     const newList = JSON.stringify(db);
@@ -10,37 +13,36 @@ const updateDB = (db) => {
     });
 };
 
+
 module.exports = function (app) {
     app.get("/api/notes", function (req, res) {
-        addID();
-        res.json(db);
+        addIDAsync()
+        .then(res.json(db));
     });
 
     app.post("/api/notes", function (req, res) {
-        db.push(req.body);
-        console.log(req.body.title);
+        const newNote = {
+            "id": db.length + 1 || 1,
+            "title": req.body.title,
+            "text": req.body.text 
+        };
+        db.push(newNote);
         updateDB(db);
         res.json(db);
     });
 
     app.delete("/api/notes/:id", function (req, res) {
-        console.log(req.params);
         const id = req.params.id;
         let newList;
         for(let i = 0; i < db.length; i++) {
             if (id == db[i].id) {
                 db.splice(i,1);
             } else {
-                console.log(id);
-                console.log(db[i].id);
+                console.log("did not find a match.");
             };
         };
         newList = JSON.stringify(db);
-        console.log(newList);
         updateDB(db);
         res.json(db);
         })
-        
-    
-
 };

@@ -3,6 +3,7 @@ const util = require("util");
 
 const readFileAsync = util.promisify(fs.readFile);
 
+// create function to add unique id to db items if they don't exist.
 const addID = () => {
     readFileAsync("./db/db.json", (err, data) => {
         if (err) throw err;
@@ -11,7 +12,7 @@ const addID = () => {
     }).then((data) => {
         let notesList = JSON.parse(data);
         for (let i = 0; i < notesList.length; i++) {
-            notesList[i].id = i;
+            notesList[i].id = i++;
         }
         let notesListID = JSON.stringify(notesList);
         fs.writeFile("./db/db.json", notesListID, (err) => {
@@ -21,14 +22,5 @@ const addID = () => {
     });
 };
 
-// const updateDB = (db) => {
-//     const newList = JSON.stringify(db);
-//     fs.writeFile("./db/db.json", newList, (err) => {
-//         if (err) throw err;
-//         console.log("File has been updated.");
-//     });
-// }
-
 
 module.exports = addID;
-// module.exports = updateDB;
